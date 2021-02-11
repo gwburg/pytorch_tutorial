@@ -23,8 +23,6 @@ testloader = torch.utils.data.DataLoader(testset, batch_size=4,
 classes = ('plane', 'car', 'bird', 'cat', 'deer', 
            'dog', 'frog', 'horse', 'ship', 'truck')
 
-
-
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
@@ -44,7 +42,7 @@ class Net(nn.Module):
         x = self.fc3(x)
         return x
 
-#net = Net()
+net = Net()
 
 def imshow(img):
     img = img/2+0.5
@@ -52,30 +50,30 @@ def imshow(img):
     plt.imshow(np.transpose(npimg,(1,2,0)))
     plt.show()
  
-#criterion = nn.CrossEntropyLoss()
-#optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
-#
-#for epoch in range(10):
-#
-#    running_loss = 0.0
-#    for i, data in enumerate(trainloader, 0):
-#        inputs, labels = data
-#    
-#        optimizer.zero_grad()
-#
-#        outputs = net(inputs)
-#        loss = criterion(outputs, labels)
-#        loss.backward()
-#        optimizer.step()
-#
-#        running_loss += loss.item()
-#        if i%2000 == 1999:
-#            print('[%d, %5d] loss: %.3f' % (epoch+1,i+1,running_loss/2000))
-#            running_loss = 0.0
-#
-#print('Finished Training')
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+
+for epoch in range(2):
+
+    running_loss = 0.0
+    for i, data in enumerate(trainloader, 0):
+        inputs, labels = data
+    
+        optimizer.zero_grad()
+
+        outputs = net(inputs)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+
+        running_loss += loss.item()
+        if i%2000 == 1999:
+            print('[%d, %5d] loss: %.3f' % (epoch+1,i+1,running_loss/2000))
+            running_loss = 0.0
+
+print('Finished Training')
  
-PATH = './cifar_net.pth'
+#PATH = './cifar_net.pth'
 #torch.save(net.state_dict(),PATH)
 
 #dataiter = iter(testloader)
@@ -84,8 +82,8 @@ PATH = './cifar_net.pth'
 #imshow(torchvision.utils.make_grid(images))
 #print('Ground Truth: ', ' '.join('%5s' % classes[labels[j]] for j in range(4)))
 
-net = Net()
-net.load_state_dict(torch.load(PATH))
+#net = Net()
+#net.load_state_dict(torch.load(PATH))
 #outputs = net(images)
 
 #_, predicted = torch.max(outputs, 1)
